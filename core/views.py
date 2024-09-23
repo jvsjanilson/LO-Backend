@@ -1,12 +1,23 @@
-from core.serializers import LivroSerializer, FormapagamentoSerializer, RegisterUserSerializer
+from core.serializers import (
+    LivroSerializer,
+    FormapagamentoSerializer,
+    RegisterUserSerializer,
+)
 from core.models import Livro, Formapagamento
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from rest_framework.permissions import (
+    IsAuthenticatedOrReadOnly,
+    IsAuthenticated,
+    AllowAny,
+)
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import mixins
 from rest_framework.views import APIView
 from django.http import JsonResponse
+from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class LivroViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
@@ -44,8 +55,10 @@ class UserAuthenticadedViewSet(APIView):
         }
         return JsonResponse(user_data, safe=False)
 
+
 class RegisterUserView(generics.CreateAPIView):
     serializer_class = RegisterUserSerializer
+    permission_classes = [AllowAny]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
