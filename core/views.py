@@ -5,6 +5,8 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticate
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import mixins
+from rest_framework.views import APIView
+from django.http import JsonResponse
 
 
 class LivroViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
@@ -29,3 +31,15 @@ class FormapagamentoViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
         SearchFilter,
         OrderingFilter,
     ]
+
+
+class UserAuthenticadedViewSet(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        user_data = {
+            "username": user.username,
+            "email": user.email,
+        }
+        return JsonResponse(user_data, safe=False)
