@@ -1,4 +1,4 @@
-from core.serializers import LivroSerializer, FormapagamentoSerializer
+from core.serializers import LivroSerializer, FormapagamentoSerializer, RegisterUserSerializer
 from core.models import Livro, Formapagamento
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
@@ -43,3 +43,12 @@ class UserAuthenticadedViewSet(APIView):
             "email": user.email,
         }
         return JsonResponse(user_data, safe=False)
+
+class RegisterUserView(generics.CreateAPIView):
+    serializer_class = RegisterUserSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({}, status=status.HTTP_201_CREATED)
