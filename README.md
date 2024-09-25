@@ -1,4 +1,4 @@
-## API - Livraria Online
+## API - Livraria Online - DB MySQL
 
 ## Instruções para instalação
 
@@ -8,20 +8,26 @@
 
 2. No diretorio do projeto crie o ambiente virtual
 
-    **python3 -n venv .venv**
+    **python -n venv .venv**
+   
+    **source .venv/Scripts/activate**
 
-3. Instale as dependências do projeto
+4. Instale as dependências do projeto
 
-    **pip3 install -r requirements.txt**
+    **pip install -r requirements.txt**
+   
+6. Crie um banco de dados chamado db_livraria no MySQL
+   
+   **Verificar configuracções no arquivo setup/settings.py**
 
-4. Rodar as makemigrations
+8. Rodar as makemigrations
 
-    **python3 manage.py makemigrations core compra**
+    **python manage.py makemigrations core compra**
 
-5. Rodar a migrate
+9. Rodar a migrate
 
-    **python3 manage.py migrate**
+    **python manage.py migrate**
 
-6. Para rodar a aplicação
+10. Para rodar a aplicação
 
-    **python3 manage.py runserver 0.0.0.0:80**
+    **python manage.py runserver 0.0.0.0:80**
