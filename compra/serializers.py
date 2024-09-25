@@ -21,12 +21,12 @@ class ItemSerializer(ModelSerializer):
 
 class CompraSerializer(ModelSerializer):
     items = serializers.SerializerMethodField()
-    
+    total_items = serializers.SerializerMethodField()
     items_create = ItemSerializer(many=True, write_only=True)
 
     class Meta:
         model = Compra
-        fields = ["id", "user",  "created_at", "items", "items_create"]
+        fields = ["id", "user",  "created_at", "total_items", "items", "items_create"]
 
     def validate(self, attrs):
 
@@ -48,3 +48,6 @@ class CompraSerializer(ModelSerializer):
     def get_items(self, obj):
         items = obj.itens.all()
         return ItemSerializer(items, many=True).data
+    
+    def get_total_items(self, obj):
+        return obj.itens.count()
