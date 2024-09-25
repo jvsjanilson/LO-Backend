@@ -4,7 +4,7 @@
 
 1. Clone o projeto
 
-    **git@github.com:jvsjanilson/lo-backend.git**
+    **git clone git@github.com:jvsjanilson/lo-backend.git**
 
 2. No diretorio do projeto crie o ambiente virtual
 
