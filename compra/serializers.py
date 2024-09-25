@@ -6,16 +6,26 @@ from rest_framework import serializers
 class ItemSerializer(ModelSerializer):
     class Meta:
         model = Item
-        fields = "__all__"
+        fields = [
+            "isbn",
+            "title",
+            "cover_i",
+            "author_name",
+            "subject",
+            "publish_date",
+            "first_sentence",
+            "quantity",
+        ]
 
     
 
 class CompraSerializer(ModelSerializer):
-    items = ItemSerializer(many=True, read_only=False)
+    items = serializers.SerializerMethodField()
+    # items = ItemSerializer(many=True, read_only=True)
 
     class Meta:
         model = Compra
-        fields = ["user", "items", "created_at"]
+        fields = ["id", "user",  "created_at", "items"]
 
     def validate(self, attrs):
 
@@ -33,3 +43,7 @@ class CompraSerializer(ModelSerializer):
         for item_data in items_data:
             Item.objects.create(compra=compra, **item_data)
         return compra
+
+    def get_items(self, obj):
+        items = obj.itens.all()
+        return ItemSerializer(items, many=True).data

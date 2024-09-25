@@ -19,7 +19,7 @@ class Compra(models.Model):
 
 class Item(models.Model):
     compra = models.ForeignKey(
-        Compra, on_delete=models.CASCADE, verbose_name="Compra", related_name="itens"
+        Compra, on_delete=models.CASCADE, verbose_name="Compra", related_name="itens", null=True, blank=True
     )
     
     isbn = models.CharField("ISBN", max_length=13)
