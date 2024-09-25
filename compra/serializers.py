@@ -17,21 +17,18 @@ class ItemSerializer(ModelSerializer):
             "quantity",
         ]
 
-    
 
 class CompraSerializer(ModelSerializer):
     items = serializers.SerializerMethodField()
     total_items = serializers.SerializerMethodField()
     items_create = ItemSerializer(many=True, write_only=True)
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Compra
-        fields = ["id", "user",  "created_at", "total_items", "items", "items_create"]
+        fields = ["id", "user", "created_at", "total_items", "items", "items_create"]
 
     def validate(self, attrs):
-
-        if attrs["user"] != self.context["request"].user:
-            raise serializers.ValidationError({"user": "Usuário inválido."})
 
         if not attrs["items_create"]:
             raise serializers.ValidationError({"items": "Compra sem itens."})
@@ -48,6 +45,6 @@ class CompraSerializer(ModelSerializer):
     def get_items(self, obj):
         items = obj.itens.all()
         return ItemSerializer(items, many=True).data
-    
+
     def get_total_items(self, obj):
-        return obj.itens.count()
+        return sum([item.quantity for item in obj.itens.all()])
