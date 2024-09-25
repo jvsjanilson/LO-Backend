@@ -27,7 +27,7 @@ class Item(models.Model):
     cover_i = models.CharField("Capa", max_length=255)
     author_name = models.CharField("Autor", max_length=255)
     subject = models.CharField("Assunto", max_length=255)
-    publish_date = models.DateField("Data de publicação")
+    publish_date = models.CharField("Data de publicação", max_length=255)
     first_sentence = models.TextField("Primeira frase")
     quantity = models.IntegerField("Quantidade")
 
