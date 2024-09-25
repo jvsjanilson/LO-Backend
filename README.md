@@ -4,7 +4,7 @@
 
 1. Clone o projeto
 
-    **git@github.com:jvsjanilson/LO-Backend.git**
+    **git@github.com:jvsjanilson/lo-backend.git**
 
 2. No diretorio do projeto crie o ambiente virtual
 
@@ -14,6 +14,14 @@
 
     **pip3 install -r requirements.txt**
 
-4. Para rodar a aplicação
+4. Rodar as makemigrations
 
-    **python3 manage.py runserver**
+    **python3 manage.py makemigrations core compra**
+
+5. Rodar a migrate
+
+    **python3 manage.py migrate**
+
+6. Para rodar a aplicação
+
+    **python3 manage.py runserver 0.0.0.0:80**
